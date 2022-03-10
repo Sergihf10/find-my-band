@@ -1,5 +1,5 @@
-'use strict';
-const mongoose = require('./');
+"use strict";
+const mongoose = require("./");
 const Schema = mongoose.Schema;
 
 //User Schema
@@ -23,7 +23,6 @@ const userSchema = new Schema({
   },
   bday: {
     type: String,
-    required: true,
   },
   bio: {
     type: String,
@@ -36,31 +35,31 @@ const userSchema = new Schema({
   roles: {
     type: [String],
     enum: [
-      'Producer',
-      'Vocalist',
-      'Drummer',
-      'Percussionist',
-      'Guitarist',
-      'Bassist',
-      'Synth / Keys',
-      'Saxophone',
+      "Producer",
+      "Vocalist",
+      "Drummer",
+      "Percussionist",
+      "Guitarist",
+      "Bassist",
+      "Synth / Keys",
+      "Saxophone",
     ],
   },
   genres: {
     type: [String],
     enum: [
-      'Hip-Hop',
-      'Pop',
-      'RnB',
-      'Blues',
-      'Soul',
-      'Jazz',
-      'Funk',
-      'Rock',
-      'Punk',
-      'House / Techno',
-      'Metal',
-      'Experimental',
+      "Hip-Hop",
+      "Pop",
+      "RnB",
+      "Blues",
+      "Soul",
+      "Jazz",
+      "Funk",
+      "Rock",
+      "Punk",
+      "House / Techno",
+      "Metal",
+      "Experimental",
     ],
   },
 
@@ -93,6 +92,6 @@ const userSchema = new Schema({
 });
 
 //Creates Document 'Users' in our DB.
-const UserModel = mongoose.model('User', userSchema);
+const UserModel = mongoose.model("User", userSchema);
 
 module.exports = UserModel;

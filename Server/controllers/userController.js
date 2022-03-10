@@ -1,5 +1,5 @@
-const UserModel = require('../models/UserModel'); //check model folder for schemas used below
-const bcrypt = require('bcrypt');
+const UserModel = require("../models/UserModel"); //check model folder for schemas used below
+const bcrypt = require("bcrypt");
 
 //getAll func
 async function getAllUsers(req, res) {
@@ -50,13 +50,19 @@ async function createUser(req, res) {
   } = req.body;
   //  CHECKING IF USER EXISTS
   const user = await UserModel.findOne({ email: email });
+  if (email === undefined || password === undefined) {
+    res.sendStatus(400);
+  }
   if (user)
     return res
       .status(409)
-      .send({ error: '409', message: 'User already exists' });
+      .send({ error: "409", message: "User already exists" });
   //If user doesnt exist:
   try {
-    if (password === '') throw new Error('Password blank');
+    if (password === "" || password === undefined) {
+      res.sendStatus(400);
+      throw new Error("Password blank");
+    }
     const hash = await bcrypt.hash(password, 10);
 
     const dbResponse = await UserModel.create({
@@ -67,9 +73,7 @@ async function createUser(req, res) {
     req.session.uid = user._id;
     res.status(201).send(user); //accepted into DB
   } catch (e) {
-    res.send(e);
     res.status(500);
-    console.log(e);
   }
 }
 
@@ -90,7 +94,7 @@ async function login(req, res) {
   } catch (err) {
     res
       .status(401)
-      .send({ error: '401', message: 'Username or password is incorrect' });
+      .send({ error: "401", message: "Username or password is incorrect" });
   }
 }
 
@@ -100,10 +104,10 @@ const logout = (req, res) => {
     if (error) {
       res
         .status(500)
-        .send({ error, message: 'Could not log out, please try again' });
+        .send({ error, message: "Could not log out, please try again" });
     } else {
-      res.clearCookie('sid');
-      res.status(200).send({ message: 'Logout successful' });
+      res.clearCookie("sid");
+      res.status(200).send({ message: "Logout successful" });
     }
   });
 };
