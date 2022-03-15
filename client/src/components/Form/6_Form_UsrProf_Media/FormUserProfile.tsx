@@ -1,17 +1,22 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 import { useContext, useState } from 'react';
 import { formContext } from '../Create_Acc_Parent/ParentForm';
+import { formContextInterface } from '../Create_Acc_Parent/ParentForm';
 
 import './FormUserProfile.css';
 
 const cloudController = require('../../../services/cloudService');
 
-function FormUserProfile() {
-  const context = useContext(formContext);
-  const [mediaFileInputState, setMediaFileInputState] = useState('');
-  const [previewSource, setPreviewSource] = useState();
-  const [mediaPreviewSrc, setMediaPreviewSrc] = useState();
-  const [mediaTracker, setMediaTracker] = useState(0);
+const FormUserProfile: React.FC = () => {
+  const context = useContext(formContext) as formContextInterface;
+  const [mediaFileInputState, setMediaFileInputState] = useState<string | FileList | readonly string[]>();
+  const [previewSource, setPreviewSource] = useState<
+    string | null | ArrayBuffer
+  >('');
+  const [mediaPreviewSrc, setMediaPreviewSrc] = useState<string | null | ArrayBuffer>('');
+  const [mediaTracker, setMediaTracker] = useState<number>(0);
 
   //Go prev page function
   function goPrevPage() {
@@ -19,7 +24,7 @@ function FormUserProfile() {
   }
 
   //Handle form submit
-  function handleSubmit(event) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
       //Go to next page
@@ -33,7 +38,7 @@ function FormUserProfile() {
   }
 
   //controller function for uploading user media
-  async function uploadUsrMedia(imgBase64) {
+  async function uploadUsrMedia(imgBase64: string | ArrayBuffer) {
     if (mediaTracker >= 3) {
       alert('Maximum number of user medias uploaded');
       return;
@@ -41,7 +46,7 @@ function FormUserProfile() {
 
     try {
       console.log('UploadusrMedia firing!');
-      setMediaFileInputState(''); //THIS DOESNT WORK ?
+      //setMediaFileInputState(); //THIS DOESNT WORK ?
       setMediaTracker((mediaTracker) => mediaTracker + 1);
       return await fetch('http://localhost:4000/cloudapi/upload/media', {
         method: 'POST',
@@ -54,7 +59,7 @@ function FormUserProfile() {
   }
 
   //Function for handling profile picture upload
-  function handleFileSubmit(event) {
+  function handleFileSubmit(event: React.MouseEvent<HTMLButtonElement>) {
     console.log('handleSubmitFile firing !');
     event.preventDefault();
     if (!previewSource) return;
@@ -62,7 +67,7 @@ function FormUserProfile() {
   }
 
   //Func for uploading usr-media picture
-  function submitUserMedia(event) {
+  function submitUserMedia(event: React.MouseEvent<HTMLButtonElement>) {
     console.log('submitUserMedia firing!');
     event.preventDefault();
     if (!mediaPreviewSrc) return;
@@ -70,7 +75,7 @@ function FormUserProfile() {
   }
 
   //Func for handling user selecting profile pic
-  function handleInputChange(files) {
+  function handleInputChange(files: FileList) {
     console.log('handleInputChange firing !');
     const file = files[0];
     console.log(file, 'FILE !');
@@ -78,7 +83,7 @@ function FormUserProfile() {
   }
 
   //func for handling user selecting usr-media file
-  function handleMediaInput(files) {
+  function handleMediaInput(files: FileList) {
     console.log('handleMediaInput firing!');
     const mediaFile = files[0];
     console.log(mediaFile, 'MEDIA FILE !');
@@ -92,7 +97,7 @@ function FormUserProfile() {
   }
 
   //Function for previewing profile pic
-  function previewFile(file) {
+  function previewFile(file: File) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -101,7 +106,7 @@ function FormUserProfile() {
   }
 
   //Function for previewing usr-media pictures
-  function previewMediaFile(file) {
+  function previewMediaFile(file: File) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -122,16 +127,17 @@ function FormUserProfile() {
           name="main-prof-pic"
           id="prof-pic"
           onChange={(e) => {
-            handleInputChange(e.target.files);
+            if (e.target.files !== null) {
+              handleInputChange(e.target.files);
+            }
           }}
         ></input>
-        <label for="prof-pic" className="upload-btn">
+        <label htmlFor="prof-pic" className="upload-btn">
           Choose File
         </label>
         <button
-          className="file-input"
+          className="file-input submit-file-btn"
           type="button"
-          className="submit-file-btn"
           onClick={handleFileSubmit}
         >
           Submit file
@@ -144,17 +150,19 @@ function FormUserProfile() {
           type="file"
           name="media-file-1"
           onChange={(e) => {
-            handleMediaInput(e.target.files);
+            if (e.target.files !== null) {
+              handleMediaInput(e.target.files);
+            }
           }}
         ></input>
-        <label for="media-file" className="upload-btn">
+        <label htmlFor="media-file" className="upload-btn">
           Choose File
         </label>
         <button
           type="button"
           className="submit-file-btn"
           onClick={submitUserMedia}
-          value={mediaFileInputState}
+          // value={mediaFileInputState}
         >
           Submit Media file
         </button>
@@ -162,16 +170,16 @@ function FormUserProfile() {
         <textarea
           className="bio-input"
           name="bio"
-          cols="10"
-          rows="10"
-          maxlength="250"
+          cols={10}
+          rows={10}
+          maxLength={250}
         ></textarea>
       </form>
 
       {/* PREVIEW YOUR SELECTED FILE */}
-      {previewSource && (
+      {previewSource && mediaPreviewSrc && (
         <img
-          src={mediaPreviewSrc}
+          src={'' + mediaPreviewSrc}
           alt="your chosen image"
           style={{ width: '450px' }}
         />
@@ -187,6 +195,6 @@ function FormUserProfile() {
       </div>
     </div>
   );
-}
+};
 
 export default FormUserProfile;

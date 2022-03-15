@@ -4,8 +4,9 @@ import { mainContext } from '../../App';
 import TinderCard from 'react-tinder-card';
 import './CardList.css';
 import SwipeButtons from '../SwipeButtons/SwipeButtons';
+import Header from '../Header/Header';
 
-function CardList() {
+const CardList: React.FC = () => {
   const context = useContext(mainContext);
 
   //Mock Data => This will be retrieved from DB
@@ -135,7 +136,9 @@ function CardList() {
     },
   ]);
   return (
-    <div>
+    <div className="userprofile">
+      <Header />
+
       <div className="card-container">
         {tempArr.map((person) => {
           return (
@@ -157,6 +160,6 @@ function CardList() {
       </div>
     </div>
   );
-}
+};
 
 export default CardList;

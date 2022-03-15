@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 //CSS
 import './Header.css';
 //Material UI Icons and Buttons
@@ -8,18 +8,18 @@ import ForumIcon from '@mui/icons-material/Forum';
 import { IconButton } from '@mui/material';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 //Logout component => TO BE REPLACED WITH PROFILE COMP
-import Logout from '../Logout/Logout';
+// import Logout from '../Logout/Logout';
 
-function Header({ backButton }) {
+const Header: React.FC = (backButton) => {
   const navigate = useNavigate();
   return (
-    <div className="header">
+    <div className="finalheader">
       {/* If backButton is passed as prop, link to homepage */}
       {backButton ? (
         <IconButton
           onClick={() => {
             console.log('click');
-            navigate(backButton);
+            navigate('/logout');
           }}
         >
           <ArrowLeftIcon
@@ -44,6 +44,6 @@ function Header({ backButton }) {
       </Link>
     </div>
   );
-}
+};
 
 export default Header;

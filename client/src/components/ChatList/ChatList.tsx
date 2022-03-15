@@ -2,7 +2,7 @@ import React from 'react';
 import Chat from '../Chat/Chat';
 //CSS
 
-function ChatList() {
+const ChatList : React.FC = () => {
   return (
     <div className="chat-list">
       <Chat

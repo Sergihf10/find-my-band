@@ -1,22 +1,34 @@
+/* eslint-disable react/jsx-pascal-case */
 //React Stuff
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useState, } from 'react';
+import { BrowserRouter as Router, Routes, Route,  } from 'react-router-dom';
 //CSS
 import './App.less';
 //Authentication
-import auth from './utils/auth';
+//import auth from './utils/auth';
 //Components
-import Header from './components/Header/Header';
+
 import CardList from './components/CardList/CardList';
 import ChatList from './components/ChatList/ChatList';
-import SwipeButtons from './components/SwipeButtons/SwipeButtons';
+//import SwipeButtons from './components/SwipeButtons/SwipeButtons';
 import { ParentForm } from './components/Form/Create_Acc_Parent/ParentForm';
-import ImageGallery from './components/temp/ImageGallery';
+//import ImageGallery from './components/temp/ImageGallery';
 import SignUp_Login from './components/SignUp_Login/SignUp_Login';
 import Logout from './components/Logout/Logout';
 
 //Creating Context
-export const mainContext = React.createContext(null);
+export const mainContext = React.createContext<AppContextInterface | null>(
+  null
+);
+
+export interface AppContextInterface {
+  users: Users[];
+  setUsers: (users: Users) => void;
+  isAuthenticated: boolean;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  currentUser: User;
+  setCurrentUser: (user: User) => void;
+}
 
 //TODO:
 //  Create Login / Register page, linking to home route or account creation
@@ -31,11 +43,17 @@ export const mainContext = React.createContext(null);
 //  Profile info : Create detailed profile info comps (matched + unmatched) for displaying user profiles
 //  MATCH: create Match functionality!
 
+type Users = typeof initialArray;
+const initialArray: [] = [];
+
+type User = typeof initialUser;
+const initialUser: {} = {};
+
 function App() {
-  const [users, setUsers] = useState([]); //will be arr of user objs from DB
-  const initialAuthState = auth.isAuthenticated(); //starts at false
-  const [isAuthenticated, setIsAuthenticated] = useState(initialAuthState);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [users, setUsers] = useState<Users[]>([]); //will be arr of user objs from DB
+  //const initialAuthState = auth.isAuthenticated(); //starts at false
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<User>(initialUser);
   return (
     <div className="App">
       <mainContext.Provider
@@ -61,7 +79,7 @@ function App() {
               path="/chat/:person"
               element={
                 <>
-                  <Header backButton="/chat" />
+                  {/* <Header backButton="/chat" /> */}
                   <h1>INDIVIDUAL CHAT!</h1>
                 </>
               }
@@ -71,7 +89,7 @@ function App() {
               path="/chat"
               element={
                 <>
-                  <Header backButton="/" />
+                  {/* <Header backButton="/" /> */}
                   <ChatList />
                 </>
               }
@@ -83,7 +101,7 @@ function App() {
               path="/"
               element={
                 <>
-                  <Header />
+
                   <CardList />
                   {/* <SwipeButtons /> */}
                 </>

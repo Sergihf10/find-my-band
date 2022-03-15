@@ -4,9 +4,10 @@ import { mainContext } from '../../App';
 import { logout } from '../../services/backEndService';
 import { useNavigate } from 'react-router-dom';
 import './Logout.css';
+import { AppContextInterface } from '../../App';
 
-function Logout() {
-  const context = useContext(mainContext); //provides access to isAuthenticated states
+const Logout: React.FC = () => {
+  const context = useContext(mainContext) as AppContextInterface; //provides access to isAuthenticated states
   let navigate = useNavigate();
 
   function handleLogout() {
@@ -30,6 +31,6 @@ function Logout() {
       </div>
     </div>
   );
-}
+};
 
 export default Logout;

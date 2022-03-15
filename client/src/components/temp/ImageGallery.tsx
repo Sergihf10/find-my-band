@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Image } from 'cloudinary-react';
+import { AdvancedImage } from '@cloudinary/react';
+import { Cloudinary } from '@cloudinary/url-gen';
 function ImageGallery() {
   const [imageIds, setImageIds] = useState([]);
 
@@ -16,7 +17,8 @@ function ImageGallery() {
   // useEffect(() => {
   //   loadImages();
   // }, []);
-
+  const cld = new Cloudinary();
+  const myImage = cld.image('sample');
   return (
     <div>
       <h3>Image Gallery</h3>
@@ -24,7 +26,8 @@ function ImageGallery() {
         imageIds.map((item, index) => {
           return (
             <div>
-              <Image
+              <AdvancedImage
+                cldImg={myImage}
                 key={index}
                 cloudName="rkendrick"
                 publicId={item}

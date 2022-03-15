@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import { formContext } from '../Create_Acc_Parent/ParentForm';
 import { useEffect } from 'react';
-import './FormGenres.css';
+import './FormWorkWithGenres.css';
+import { formContextInterface } from '../Create_Acc_Parent/ParentForm';
 
-function FormGenres() {
-  const context = useContext(formContext);
-  const [tempArr, setTempArr] = useState([]);
+const FormWorkWith: React.FC = () => {
+  const context = useContext(formContext) as formContextInterface;
+  const [tempArr, setTempArr] = useState<string[]>([]);
   const genres = [
     'Hip-Hop',
     'Pop',
@@ -17,30 +18,17 @@ function FormGenres() {
     'Funk',
     'Rock',
     'Punk',
-    'House / Techno',
+    'House',
     'Metal',
     'Experimental',
   ];
 
-  function checkLength(arr) {
-    if (arr.length > 7) {
-      let maxSizeArr = arr.slice(0, arr.length - 1);
-      setTempArr(maxSizeArr);
-      alert('Please select your 7 most relevant genres :)');
-    }
-  }
-
   useEffect(() => {
     console.log('tempArr updated');
-    console.log(tempArr, '<< tempArr GENRES');
-    checkLength(tempArr);
+    console.log(tempArr, '<< tempArr BandRoles');
   }, [tempArr]);
 
-  function goPrevPage() {
-    context.setPage((page) => page - 1);
-  }
-
-  function toggleElement(item) {
+  function toggleElement(item: string) {
     setTempArr((prevArr) => {
       let arrCopy = [...prevArr];
       if (arrCopy.includes(item)) {
@@ -54,30 +42,34 @@ function FormGenres() {
     });
   }
 
-  function handleSubmit(event) {
+  function goPrevPage() {
+    context.setPage((page) => page - 1);
+  }
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
       //Update context
-      context.setUserObj({ ...context.userObj, genres: tempArr });
+      context.setUserObj({ ...context.userObj, workWithGenres: tempArr });
       //Go to next page
       context.setPage((page) => page + 1);
     } catch (err) {
-      console.log(' : : : error submitting User Genres : : : ', err);
+      console.log(' : : : error submitting User Desired Genres : : : ', err);
     }
   }
 
   return (
-    <div className="genres-form-container" onSubmit={handleSubmit}>
-      <form className="genres-form">
-        <h3 className="top-text">What genres describe you best?</h3>
-        <h4 className="sub-top">Pick up to 7 most relevant</h4>
+    <div className="genres-form-container">
+      <form className="form basicform" onSubmit={handleSubmit}>
+        <h3 className="top-text">And what genres do they make ?</h3>
+        <h4 className="sub-top">Pick as many as you like</h4>
         <div className="genres-container">
           {genres.map((item) => {
             let isSelected = tempArr.includes(item); //returns true if tempArr includes item
             return (
               <div
                 key={item}
-                className={`${isSelected && 'usr-selected'}  usr-select`}
+                className={`${isSelected && 'usr-selected'}  usr-select4`}
                 onClick={() => {
                   toggleElement(item);
                 }}
@@ -88,17 +80,17 @@ function FormGenres() {
           })}
         </div>
 
-        <div className="footer">
-          <button className="footer-btn" onClick={goPrevPage}>
+        <div className="buttons">
+          <button className="back-btn" onClick={goPrevPage}>
             Prev
           </button>
-          <button className="footer-btn" type="submit">
+          <button className="next-btn" type="submit">
             Next Page
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
-export default FormGenres;
+export default FormWorkWith;

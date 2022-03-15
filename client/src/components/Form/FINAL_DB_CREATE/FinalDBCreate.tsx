@@ -7,9 +7,10 @@ import { formContext } from '../Create_Acc_Parent/ParentForm';
 import './FinalDBCreate.css';
 //Services
 import { createUser } from '../../../services/backEndService';
+import { formContextInterface } from '../Create_Acc_Parent/ParentForm';
 
-function FinalDBCreate() {
-  const context = useContext(formContext);
+const FinalDBCreate : React.FC = () => {
+  const context = useContext(formContext) as formContextInterface;
   let navigate = useNavigate();
   function createAcc() {
     console.log('creating account...');

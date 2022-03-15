@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 //Importing Form Components / pages
@@ -6,18 +7,49 @@ import FormBandRoles from '../2_Form_Band_Roles/FormBandRoles';
 import FormGenres from '../3_Form_Genres/FormGenres';
 import WorkWith_Instruments from '../4_Form_Work_With_Instruments/WorkWith_Instruments';
 import FormWorkWithGenres from '../5_Form_Work_With_Genres/FormWorkWithGenres';
-import FormUserProfile from '../6_Form_UsrProf_Media/FormUserProfile';
 import FinalDBCreate from '../FINAL_DB_CREATE/FinalDBCreate';
 //CSS
 import './ParentForm.css';
 
 //Creating Context
-export const formContext = React.createContext(null);
+export const formContext = React.createContext<formContextInterface | null>(
+  null
+);
+
+export interface formContextInterface {
+  userObj: initialUser;
+  setUserObj: (user: initialUser) => void;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+//type User = typeof initialUser;
+interface initialUser {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  bday: string;
+  roles: Array<string>;
+  workWithRoles: Array<string>;
+  genres: Array<string>;
+  workWithGenres: Array<string>;
+  bio: string;
+  profilePic: string;
+  pics: Array<string>;
+  audios: Array<string>;
+  likes: Array<string>;
+  dislikes: Array<string>;
+  matches: Array<string>;
+}
+
+// type Users = typeof initialArray;
+// const initialArray : Array<string> = Array<string>
 
 //Creating Parent form container
-function ParentForm() {
+const ParentForm: React.FC = () => {
   //Creating Parent states
-  const [userObj, setUserObj] = useState({
+  const [userObj, setUserObj] = useState<initialUser>({
     email: '',
     password: '',
     firstName: '',
@@ -42,14 +74,14 @@ function ParentForm() {
   }, [userObj]);
 
   //State for managing form pages
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
 
   return (
     <formContext.Provider value={{ userObj, setUserObj, page, setPage }}>
       <div className="main-form-container">
         {/* Progress bar goes here */}
         <div className="progress-tracker">
-          <h3 className="page-tracker">Page{page} / 6</h3>
+          <h1 className="page-tracker">Page {page} / 6</h1>
           <progress className="progress-bar" max="6" value={page} />
         </div>
 
@@ -64,13 +96,13 @@ function ParentForm() {
 
           {/* TODO: make functionality for retrieving user images from cloud
             AFTER user has created their account in DB. This will allow me to link
-            a user _ID (from mongoDB) to the pictures the user uploads. This is why FormUserProfile 
+            a user _ID (from mongoDB) to the pictures the user uploads. This is why FormUserProfile
             is commented out below. */}
           {/* {page === 6 && <FormUserProfile />} */}
         </div>
       </div>
     </formContext.Provider>
   );
-}
+};
 
 export { ParentForm };

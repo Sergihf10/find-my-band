@@ -2,7 +2,12 @@
 
 //Function for uploading 1 profile picture to cloudinary
 //Target directory => FindMyBand/ProfilePics
-async function uploadImage(imgBase64) {
+const cloudService = {
+  uploadImage: (str: string) => {},
+  uploadUsrMedia: (str: string) => {},
+};
+
+cloudService.uploadImage = async (imgBase64: string) => {
   console.log(imgBase64);
   try {
     console.log('cloudService uploadImage firing!');
@@ -14,10 +19,10 @@ async function uploadImage(imgBase64) {
   } catch (err) {
     console.log('Error uploading file Usr Profile : : : ', err);
   }
-}
+};
 
 //Similar function for uploading to different cloudinary folder
-async function uploadUsrMedia(imgBase64) {
+cloudService.uploadUsrMedia = async (imgBase64: string) => {
   console.log(imgBase64);
   try {
     console.log('UploadusrMedia firing!');
@@ -29,6 +34,6 @@ async function uploadUsrMedia(imgBase64) {
   } catch (err) {
     console.log('Error uploading file Usr media : : : ', err);
   }
-}
+};
 
-module.exports = { uploadImage, uploadUsrMedia };
+export default cloudService;

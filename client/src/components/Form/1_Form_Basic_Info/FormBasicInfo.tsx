@@ -3,23 +3,32 @@ import { useContext } from 'react';
 import { formContext } from '../Create_Acc_Parent/ParentForm';
 import './FormBasicInfo.css';
 import { Link } from 'react-router-dom';
+import { formContextInterface } from '../Create_Acc_Parent/ParentForm';
 
-function FormBasicInfo() {
+const FormBasicInfo: React.FC = () => {
   //reference the context of parent componnent
-  const context = useContext(formContext);
+  const context = useContext(formContext) as formContextInterface;
 
   //TODO:
   //  Make the handleSubnit function update context state x
-  function handleSubmit(event) {
+  function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
+      const form = event.currentTarget;
+      const formElements = form.elements as typeof form.elements & {
+        firstName: { value: string };
+        lastName: { value: string };
+        bday: { value: string };
+        email: { value: string };
+        password: { value: string };
+      };
       //Grabbing inputs
-      const firstNameInput = event.target.firstName.value;
-      const lastNameInput = event.target.lastName.value;
-      const bdayInput = new Date(event.target.bday.value);
+      const firstNameInput = formElements.firstName.value;
+      const lastNameInput = formElements.lastName.value;
+      const bdayInput = new Date(formElements.bday.value);
       let bdayISO = bdayInput.toISOString();
-      const emailInput = event.target.email.value;
-      const passwordInput = event.target.password.value;
+      const emailInput = formElements.email.value;
+      const passwordInput = formElements.password.value;
 
       //Updating State
       context.setUserObj({
@@ -39,7 +48,7 @@ function FormBasicInfo() {
 
   return (
     <div className="basic-info-form">
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form basicform" onSubmit={handleSubmit}>
         <h2 className="top-text">To get started, we need some basic info:</h2>
         <p>First Name</p>
         <input type={'text'} name="firstName" className="form-input"></input>
@@ -51,16 +60,17 @@ function FormBasicInfo() {
         <input type={'email'} name="email" className="form-input"></input>
         <p>Password</p>
         <input type={'password'} name="password" className="form-input"></input>
-
-        <button type="submit" className="next-btn">
-          Next
-        </button>
-        <Link to="/login">
-          <button className="back-login-btn">Back to Login</button>
-        </Link>
+        <div className="buttons">
+          <Link to="/login" className="loginhref">
+            <button className="back-btn">Back to Login</button>
+          </Link>
+          <button type="submit" className="next-btn">
+            Next
+          </button>
+        </div>
       </form>
     </div>
   );
-}
+};
 
 export default FormBasicInfo;

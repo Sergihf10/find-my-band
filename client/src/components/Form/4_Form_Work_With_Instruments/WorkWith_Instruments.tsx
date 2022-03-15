@@ -3,11 +3,12 @@ import { useContext } from 'react';
 import { formContext } from '../Create_Acc_Parent/ParentForm';
 import { useEffect } from 'react';
 import './WorkWith_Instruments.css';
+import { formContextInterface } from '../Create_Acc_Parent/ParentForm';
 
-function WorkWith_Instruments() {
+const WorkWith_Instruments: React.FC = () => {
   //reference the context of parent componnent
-  const context = useContext(formContext);
-  const [tempArr, setTempArr] = useState([]); // when user
+  const context = useContext(formContext) as formContextInterface;
+  const [tempArr, setTempArr] = useState<string[]>([]); // when user
   //Roles users can select
   const roles = [
     'Producer',
@@ -32,7 +33,7 @@ function WorkWith_Instruments() {
   }
 
   //Handle submit. Go to next page and update context <usrObj> state
-  function handleSubmit(event) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
       //Update context
@@ -45,7 +46,7 @@ function WorkWith_Instruments() {
   }
 
   //Func for toggling element in / out of tempArr
-  function toggleElement(item) {
+  function toggleElement(item: string) {
     setTempArr((prevArr) => {
       let arrCopy = [...prevArr];
       //if item already exists, remove it from array
@@ -65,9 +66,9 @@ function WorkWith_Instruments() {
 
   //returning our rendered form
   return (
-    <div className="roles-form-container" onSubmit={handleSubmit}>
+    <div className="roles-form-container">
       {/* <p>{JSON.stringify(tempArr)}</p> */}
-      <form className="roles-form">
+      <form className="from basicform" onSubmit={handleSubmit}>
         <h3 className="top-text">Who are you looking to work with?</h3>
         <h4 className="sub-top">Pick as many as you like</h4>
         <div className="roles-container">
@@ -76,7 +77,7 @@ function WorkWith_Instruments() {
             return (
               <div
                 key={item}
-                className={`${isSelected && 'usr-selected'}  usr-select`}
+                className={`${isSelected && 'usr-selected'}  usr-select3`}
                 onClick={() => {
                   toggleElement(item);
                 }}
@@ -87,17 +88,17 @@ function WorkWith_Instruments() {
           })}
         </div>
 
-        <div className="footer">
-          <button className="footer-btn" onClick={goPrevPage}>
+        <div className="buttons">
+          <button className="back-btn" onClick={goPrevPage}>
             Prev
           </button>
-          <button className="footer-btn" type="submit">
+          <button className="next-btn" type="submit">
             Next Page
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
 export default WorkWith_Instruments;

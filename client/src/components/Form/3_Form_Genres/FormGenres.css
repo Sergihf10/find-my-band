@@ -1,14 +1,15 @@
-.usr-select {
+.usr-select2 {
   margin: 0 auto;
   padding: 8px;
   text-align: center;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 20px;
   width: 150px;
   display: inline-block;
   margin: 5px;
   height: 47px;
   transition: 250ms width ease, 250ms;
+  font-weight: 600;
 }
 
 .sub-top {

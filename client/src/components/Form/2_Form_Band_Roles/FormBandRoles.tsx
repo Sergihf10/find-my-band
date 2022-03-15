@@ -3,11 +3,12 @@ import { useContext } from 'react';
 import { formContext } from '../Create_Acc_Parent/ParentForm';
 import { useEffect } from 'react';
 import './FormBandRoles.css';
+import { formContextInterface } from '../Create_Acc_Parent/ParentForm';
 
-function FormBandRoles() {
+const FormBandRoles: React.FC = () => {
   //reference the context of parent componnent
-  const context = useContext(formContext);
-  const [tempArr, setTempArr] = useState([]); // when user
+  const context = useContext(formContext) as formContextInterface;
+  const [tempArr, setTempArr] = useState<string[]>([]); // when user
   //Roles users can select
   const roles = [
     'Producer',
@@ -22,7 +23,7 @@ function FormBandRoles() {
 
   //Validator for checking tempArr Length is correct.
   //If tempArr > 5, remove last element and alert.
-  function checkLength(arr) {
+  function checkLength(arr: string[]) {
     if (arr.length > 5) {
       let maxSizeArr = arr.slice(0, arr.length - 1);
       setTempArr(maxSizeArr);
@@ -43,7 +44,7 @@ function FormBandRoles() {
   }
 
   //Handle submit. Go to next page and update context <usrObj> state
-  function handleSubmit(event) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
       //Updating context
@@ -56,7 +57,7 @@ function FormBandRoles() {
   }
 
   //Func for toggling element in / out of tempArr
-  function toggleElement(item) {
+  function toggleElement(item: string) {
     setTempArr((prevArr) => {
       let arrCopy = [...prevArr];
       //if item already exists, remove it from array
@@ -76,9 +77,9 @@ function FormBandRoles() {
 
   //returning our rendered form
   return (
-    <div className="roles-form-container" onSubmit={handleSubmit}>
+    <div className="roles-form-container">
       {/* <p>{JSON.stringify(tempArr)}</p> */}
-      <form className="roles-form">
+      <form className="form basicform" onSubmit={handleSubmit}>
         <h3 className="top-text">What roles describe you best?</h3>
         <h4 className="sub-top">Pick up to 5 most relevant</h4>
         <div className="roles-container">
@@ -87,7 +88,7 @@ function FormBandRoles() {
             return (
               <div
                 key={item}
-                className={`${isSelected && 'usr-selected'}  usr-select`}
+                className={`${isSelected && 'usr-selected'}  usr-select1`}
                 onClick={() => {
                   toggleElement(item);
                 }}
@@ -98,17 +99,17 @@ function FormBandRoles() {
           })}
         </div>
 
-        <div className="footer">
-          <button className="footer-btn" onClick={goPrevPage}>
+        <div className="buttons">
+          <button className="back-btn" onClick={goPrevPage}>
             Prev
           </button>
-          <button className="footer-btn" type="submit">
+          <button type="submit" className="next-btn">
             Next Page
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
 export default FormBandRoles;

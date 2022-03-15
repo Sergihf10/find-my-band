@@ -1,16 +1,20 @@
 .main-form-container {
+  background: #f6f5f7;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
-  background-color: rgb(240, 240, 240);
   width: 100vw;
   height: 100vh;
   row-gap: 10px;
 }
 
 .progress-tracker {
-  margin: 0 auto;
+  margin: 50px auto;
+}
+
+.progress-tracker h1 {
+  margin-bottom: 20px;
 }
 
 .progress-bar {

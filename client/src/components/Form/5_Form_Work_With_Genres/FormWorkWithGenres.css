@@ -7,3 +7,17 @@
   flex-direction: column;
   flex-wrap: wrap;
 }
+
+.usr-select4 {
+  margin: 0 auto;
+  padding: 15px;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 20px;
+  width: 140px;
+  display: inline-block;
+  margin: 5px;
+  height: 45px;
+  transition: 250ms width ease, 250ms;
+  font-weight: 600;
+}

@@ -1,0 +1,10 @@
+.register-btn {
+  margin: 20px auto;
+}
+
+.db-creater {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

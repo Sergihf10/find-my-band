@@ -1,7 +1,7 @@
 const baseURL = 'http://localhost:4000';
 
 //Create user in DB
-export const createUser = (usr) => {
+export const createUser = (usr : {}) => {
   return fetch(`${baseURL}/users`, {
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export const createUser = (usr) => {
 };
 
 //Login user
-export const loginUser = (usr) => {
+export const loginUser = (usr : {}) => {
   return fetch(`${baseURL}/login`, {
     method: 'POST',
     credentials: 'include',

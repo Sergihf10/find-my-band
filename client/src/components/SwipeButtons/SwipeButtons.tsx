@@ -2,7 +2,7 @@ import React from 'react';
 import ReplayIcon from '@mui/icons-material/Replay';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
-import { Icon, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 
 import './SwipeButtons.css';
 
@@ -10,7 +10,7 @@ import './SwipeButtons.css';
 //  Implement swipe functionality with buttons
 //  create functions for handling diff. button clicks
 
-function SwipeButtons() {
+const SwipeButtons: React.FC = () => {
   return (
     <div className="swipe-buttons">
       <IconButton className="swipe-btn-dislike">
@@ -24,6 +24,6 @@ function SwipeButtons() {
       </IconButton>
     </div>
   );
-}
+};
 
 export default SwipeButtons;
