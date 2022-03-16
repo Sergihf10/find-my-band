@@ -1,20 +1,21 @@
 /* eslint-disable react/jsx-pascal-case */
 //React Stuff
-import React, { useState, } from 'react';
-import { BrowserRouter as Router, Routes, Route,  } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //CSS
-import './App.less';
+import "./App.less";
 //Authentication
 //import auth from './utils/auth';
 //Components
 
-import CardList from './components/CardList/CardList';
-import ChatList from './components/ChatList/ChatList';
+import CardList from "./components/CardList/CardList";
+import ChatList from "./components/ChatList/ChatList";
 //import SwipeButtons from './components/SwipeButtons/SwipeButtons';
-import { ParentForm } from './components/Form/Create_Acc_Parent/ParentForm';
+import { ParentForm } from "./components/Form/Create_Acc_Parent/ParentForm";
 //import ImageGallery from './components/temp/ImageGallery';
-import SignUp_Login from './components/SignUp_Login/SignUp_Login';
-import Logout from './components/Logout/Logout';
+import SignUp_Login from "./components/SignUp_Login/SignUp_Login";
+import Logout from "./components/Logout/Logout";
+import ChatRoom from "./components/chatRoom/chatRoom";
 
 //Creating Context
 export const mainContext = React.createContext<AppContextInterface | null>(
@@ -75,15 +76,7 @@ function App() {
             {/* Route for Logout */}
             <Route path="/logout" element={<Logout />}></Route>
             {/* Chat with particular user */}
-            <Route
-              path="/chat/:person"
-              element={
-                <>
-                  {/* <Header backButton="/chat" /> */}
-                  <h1>INDIVIDUAL CHAT!</h1>
-                </>
-              }
-            />
+            <Route path="/ChatRoom/:id" element={<ChatRoom />} />
             {/* Chat-list Route */}
             <Route
               path="/chat"
@@ -101,7 +94,6 @@ function App() {
               path="/"
               element={
                 <>
-
                   <CardList />
                   {/* <SwipeButtons /> */}
                 </>
